@@ -56,8 +56,8 @@ window.onload = function()
          * 辉光
          * */
 
-        var composer, mixer;
-        var params = {
+        let composer, mixer;
+        let params = {
             exposure: 2,
             bloomStrength: 2,
             bloomThreshold: 0,
@@ -141,7 +141,7 @@ window.onload = function()
             console.log('init postprocess');
 
             composer = new THREE.EffectComposer( renderer );
-            
+            console.log(composer);
             composer.setSize( window.innerWidth, window.innerHeight );
             let pass = new THREE.RenderPass( scene, camera );
             composer.addPass(  pass );
@@ -150,6 +150,8 @@ window.onload = function()
             let pass1 = new THREE.ShaderPass(THREE.SepiaShader);
             composer.addPass( pass1 );
             pass1.renderToScene = true;
+
+            //let pass2 = new THREE.ShaderPass(THREE.SepiaShader);
         }
 
 
@@ -230,10 +232,10 @@ window.onload = function()
 
             for (let p = 0; p < 50; p++) {
                 let tempMesh =new THREE.Mesh(smoke_geo,smoke_mat);
-                tempMesh.position.set(Math.random()* 1000 - 500,
-                                      Math.random()* 1000 - 500,
-                                      Math.random()* 500 );
-                tempMesh.rotation.z = Math.random() * 360;
+                tempMesh.position.set( Math.random() * 1000 - 500,
+                                       Math.random() * 1000 - 500,
+                                       Math.random() * 500 );
+                tempMesh.rotation.z =  Math.random() * 360;
                 smoke_particles.push(tempMesh);
                 scene.add(tempMesh);
                 //tempMesh.lookAt(camera.position);
@@ -507,9 +509,10 @@ window.onload = function()
             //render_smoke(time);
 
             
-            //
-            //renderer.render(scene, camera);
-            composer.render();
+            
+            renderer.render(scene, camera);
+            //console.log(composer);
+            //composer.render(clock.getDelta());
         }
 
         function render_smoke(time)

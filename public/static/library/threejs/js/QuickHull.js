@@ -5,10 +5,12 @@
  *
  */
 
-( function() {
+( function () {
 
 	var Visible = 0;
 	var Deleted = 1;
+
+	var v1 = new THREE.Vector3();
 
 	function QuickHull() {
 
@@ -116,6 +118,106 @@
 			} );
 
 			return this.setFromPoints( points );
+
+		},
+
+		containsPoint: function ( point ) {
+
+			var faces = this.faces;
+
+			for ( var i = 0, l = faces.length; i < l; i ++ ) {
+
+				var face = faces[ i ];
+
+				// compute signed distance and check on what half space the point lies
+
+				if ( face.distanceToPoint( point ) > this.tolerance ) return false;
+
+			}
+
+			return true;
+
+		},
+
+		intersectRay: function ( ray, target ) {
+
+			// based on "Fast Ray-Convex Polyhedron Intersection"  by Eric Haines, GRAPHICS GEMS II
+
+			var faces = this.faces;
+
+			var tNear = - Infinity;
+			var tFar = Infinity;
+
+			for ( var i = 0, l = faces.length; i < l; i ++ ) {
+
+				var face = faces[ i ];
+
+				// interpret faces as planes for the further computation
+
+				var vN = face.distanceToPoint( ray.origin );
+				var vD = face.normal.dot( ray.direction );
+
+				// if the origin is on the positive side of a plane (so the plane can "see" the origin) and
+				// the ray is turned away or parallel to the plane, there is no intersection
+
+				if ( vN > 0 && vD >= 0 ) return null;
+
+				// compute the distance from the ray’s origin to the intersection with the plane
+
+				var t = ( vD !== 0 ) ? ( - vN / vD ) : 0;
+
+				// only proceed if the distance is positive. a negative distance means the intersection point
+				// lies "behind" the origin
+
+				if ( t <= 0 ) continue;
+
+				// now categorized plane as front-facing or back-facing
+
+				if ( vD > 0 ) {
+
+					//  plane faces away from the ray, so this plane is a back-face
+
+					tFar = Math.min( t, tFar );
+
+				} else {
+
+					// front-face
+
+					tNear = Math.max( t, tNear );
+
+				}
+
+				if ( tNear > tFar ) {
+
+					// if tNear ever is greater than tFar, the ray must miss the convex hull
+
+					return null;
+
+				}
+
+			}
+
+			// evaluate intersection point
+
+			// always try tNear first since its the closer intersection point
+
+			if ( tNear !== - Infinity ) {
+
+				ray.at( tNear, target );
+
+			} else {
+
+				ray.at( tFar, target );
+
+			}
+
+			return target;
+
+		},
+
+		intersectsRay: function ( ray ) {
+
+			return this.intersectRay( ray, v1 ) !== null;
 
 		},
 
@@ -348,7 +450,7 @@
 
 			// compute the min/max vertex on all six directions
 
-			for ( i = 0, l = this.vertices.length; i < l ; i ++ ) {
+			for ( i = 0, l = this.vertices.length; i < l; i ++ ) {
 
 				var vertex = this.vertices[ i ];
 				var point = vertex.point;
@@ -400,7 +502,7 @@
 
 			var line3, plane, closestPoint;
 
-			return function computeInitialHull () {
+			return function computeInitialHull() {
 
 				if ( line3 === undefined ) {
 
@@ -470,7 +572,7 @@
 
 				// 3. The next vertex 'v3' is the one farthest to the plane 'v0', 'v1', 'v2'
 
-				maxDistance = 0;
+				maxDistance = - 1;
 				plane.setFromCoplanarPoints( v0.point, v1.point, v2.point );
 
 				for ( i = 0, l = this.vertices.length; i < l; i ++ ) {
@@ -562,7 +664,7 @@
 
 				for ( i = 0, l = vertices.length; i < l; i ++ ) {
 
-					vertex = vertices[i];
+					vertex = vertices[ i ];
 
 					if ( vertex !== v0 && vertex !== v1 && vertex !== v2 && vertex !== v3 ) {
 
@@ -584,9 +686,9 @@
 
 						if ( maxFace !== null ) {
 
-	          	this.addVertexToFace( vertex, maxFace );
+							this.addVertexToFace( vertex, maxFace );
 
-	        	}
+						}
 
 					}
 
@@ -785,7 +887,6 @@
 		addVertexToHull: function ( eyeVertex ) {
 
 			var horizon = [];
-			var i, face;
 
 			this.unassigned.clear();
 
@@ -856,7 +957,7 @@
 
 	Object.assign( Face, {
 
-		create: function( a, b, c ) {
+		create: function ( a, b, c ) {
 
 			var face = new Face();
 
@@ -908,7 +1009,7 @@
 
 			var triangle;
 
-			return function compute () {
+			return function compute() {
 
 				if ( triangle === undefined ) triangle = new THREE.Triangle();
 
@@ -918,9 +1019,9 @@
 
 				triangle.set( a.point, b.point, c.point );
 
-				triangle.normal( this.normal );
-				triangle.midpoint( this.midpoint );
-				this.area = triangle.area();
+				triangle.getNormal( this.normal );
+				triangle.getMidpoint( this.midpoint );
+				this.area = triangle.getArea();
 
 				this.constant = this.normal.dot( this.midpoint );
 
@@ -1202,7 +1303,7 @@
 
 		},
 
-		isEmpty: function() {
+		isEmpty: function () {
 
 			return this.head === null;
 
@@ -1215,4 +1316,4 @@
 	THREE.QuickHull = QuickHull;
 
 
-} ) ();
+} )();
