@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>l.q例子效果</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0,initial-scale=1.0">
+		<style>
+
+			body {
+				background-color: #000000;
+				margin: 0px;
+				overflow: hidden;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+				font-weight: bold;
+				text-align:center;
+			}
+
+			a {
+				color:#0078ff;
+			}
+
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+				z-index: 100;
+			}
+
+			.QRcode{
+				z-index: 100;
+				position:fixed;
+				margin:5px;
+				bottom: 16px;
+				right: 16px;
+				width:64px;
+				height:64px;
+				background-size: contain;
+			}
+			
+			.QRcode:hover
+			{
+				background:rgb(42,42,42);
+				background-size: contain;
+			}
+
+			.contact {
+				z-index: 100;
+				user-select: none;
+    			position: fixed;
+    			text-align: right;
+    			font-size: 1.5rem;
+    			width: 100%;
+    			right: 24px;
+    			bottom: 81px;
+    			color: #f0f0f0;
+			}
+
+			.contact div
+			{
+				display: block;
+    			flex-direction: column;
+			}
+
+			#threejsDiv 
+            {
+                width: 100%;
+                height: 100%;
+                background: #11e8bb; /* Old browsers */
+                background: -moz-linear-gradient(top,  #0a0f1a 0%, #0d0e20 100%); /* FF3.6-15 */
+                background: -webkit-linear-gradient(top,  #0a0f1a 0%, #0d0e20 100%); /* Chrome10-25,Safari5.1-6 */
+                background: linear-gradient(to bottom,  #0a0f1a 0%, #0d0e20 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11e8bb', endColorstr='#8200c9',GradientType=0 ); /* IE6-9 */
+            }
+
+		</style>
+	</head>
+	<body>
+
+		<div class="QRcode" onclick="onclick_qrCode()">
+			<img src="/static/img/5.png" style="width:calc(100% - 4px);padding:2px;" />
+			<span style="color:#f0f0f0;">二维码</span>
+		</div>
+		<div class="contact">
+			<div style="display:none;    font-family: '微软雅黑';">
+				<p><strong>L.q</srong></p>
+				<p>020-12345678</p>
+				<p>Address:海口市龙华区XXXXXXXXXXXXXXXXX</p>
+				
+			</div>		
+		</div>
+
+		<link href="static/css/animate.css" rel="stylesheet"/>
+		<script src="static/library/threejs/build/three.js"></script>
+        <script src="static/library/Tween.js"></script>
+		<script src="static/library/threejs/js/Detector.js"></script>
+		<script src="static/library/threejs/js/libs/stats.min.js"></script>
+		<script src="static/library/threejs/js/loaders/GLTFLoader.js"></script>
+		
+		<script src="static/library/threejs/js/postprocessing/EffectComposer.js"></script>
+
+		<script src="static/library/threejs/js/shaders/CopyShader.js"></script>
+		<script src="static/library/threejs/js/postprocessing/RenderPass.js"></script>
+		<script src="static/library/threejs/js/postprocessing/ShaderPass.js"></script>
+		<script src="static/library/threejs/js/shaders/SepiaShader.js"></script>
+
+        <script src="/bundle.js"></script>
+		<script>
+			let bShowQRCode = false;
+
+
+
+			function onclick_qrCode()
+			{
+				document.querySelector('.contact').querySelector('div').style.display = 'block';
+				if (bShowQRCode )
+				{
+					window.ThreeIns.tweenAnim1();
+					document.querySelector('.contact').querySelector('div').classList = new Array();
+					document.querySelector('.contact').querySelector('div').classList.add( 'animated', 'zoomOut','slow');
+				}
+				else 
+				{
+					window.ThreeIns.tweenAnim();
+					document.querySelector('.contact').querySelector('div').classList = new Array();
+					document.querySelector('.contact').querySelector('div').classList.add('animated', 'zoomIn' );
+				}
+				bShowQRCode = !bShowQRCode;
+			};
+		</script>
+	</body>
+</html>
