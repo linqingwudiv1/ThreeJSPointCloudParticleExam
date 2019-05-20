@@ -142,7 +142,7 @@ window.onload = function()
             console.log('init postprocess');
 
             composer = new THREE.EffectComposer( renderer );
-            console.log(composer);
+            //console.log(composer);
             composer.setSize( window.innerWidth, window.innerHeight );
             let pass = new THREE.RenderPass( scene, camera );
             composer.addPass(  pass );
