@@ -2,7 +2,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode:'development',
-    //mode:'production',
+    //mode:'production',//发布版本
     devtool: 'eval-source-map',
     entry:  __dirname + "/src/js/main.js",
     output: {
@@ -10,9 +10,9 @@ module.exports = {
       filename: "bundle.js"
     },
     devServer: {
-        contentBase: "./public",//本地服务器所加载的页面所在的目录
-        historyApiFallback: true,//不跳转
-        inline: true//实时刷新
+        contentBase: "./public",
+        historyApiFallback: true,
+        inline: true
     },
     plugins:[
         new CopyPlugin([
