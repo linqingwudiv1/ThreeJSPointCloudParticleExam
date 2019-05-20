@@ -9,7 +9,7 @@
 	</head>
 	<body>
 
-		<div class="QRcode" onclick="onclick_qrCode()">
+		<div class="QRcode" onclick="onclick_qrCode();">
 			<img src="/static/img/5.png" style="width:calc(100% - 4px);padding:2px;" />
 			<span style="color:#f0f0f0;">二维码</span>
 		</div>
@@ -24,7 +24,10 @@
 
 
 		<script src="static/library/threejs/build/three.js"></script>
-        <script src="static/library/Tween.js"></script>
+		<script src="static/library/Tween.js"></script>
+		<script src="static/library/"></script>
+
+
 		<script src="static/library/threejs/js/Detector.js"></script>
 		<script src="static/library/threejs/js/libs/stats.min.js"></script>
 		<script src="static/library/threejs/js/loaders/GLTFLoader.js"></script>
@@ -39,7 +42,6 @@
         <script src="/bundle.js"></script>
 		<script>
 			let bShowQRCode = false;
-
 
 
 			function onclick_qrCode()
