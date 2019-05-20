@@ -1,6 +1,7 @@
 let ThreeIns;
 
-
+// 二维码地址
+let qrcodeUrl = 'static/img/5.png';
 
 window.onload = function()
 {
@@ -103,7 +104,7 @@ window.onload = function()
         let content = canvas.getContext('2d');
         let img = new Image();
         let imgData ;
-        img.src = "static/img/5.png";
+        img.src = qrcodeUrl;
         canvas.style.position = 'absolute';
 
         if (window.innerWidth > 720)

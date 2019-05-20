@@ -4,79 +4,8 @@
 		<title>l.q例子效果</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0,initial-scale=1.0">
-		<style>
-
-			body {
-				background-color: #000000;
-				margin: 0px;
-				overflow: hidden;
-				font-family:Monospace;
-				font-size:13px;
-				text-align:center;
-				font-weight: bold;
-				text-align:center;
-			}
-
-			a {
-				color:#0078ff;
-			}
-
-			#info {
-				color: #fff;
-				position: absolute;
-				top: 0px; width: 100%;
-				padding: 5px;
-				z-index: 100;
-			}
-
-			.QRcode{
-				z-index: 100;
-				position:fixed;
-				margin:5px;
-				bottom: 16px;
-				right: 16px;
-				width:64px;
-				height:64px;
-				background-size: contain;
-			}
-			
-			.QRcode:hover
-			{
-				background:rgb(42,42,42);
-				background-size: contain;
-			}
-
-			.contact {
-				z-index: 100;
-				user-select: none;
-    			position: fixed;
-    			text-align: right;
-    			font-size: 1.5rem;
-    			width: 100%;
-    			right: 24px;
-    			bottom: 81px;
-    			color: #f0f0f0;
-			}
-
-			.contact div
-			{
-				display: block;
-    			flex-direction: column;
-			}
-
-			#threejsDiv 
-            {
-				/*3D场景背景渐变*/
-                width: 100%;
-                height: 100%;
-                background: #11e8bb; /* Old browsers */
-                background: -moz-linear-gradient(top,  #0a0f1a 0%, #0d0e20 100%); /* FF3.6-15 */
-                background: -webkit-linear-gradient(top,  #0a0f1a 0%, #0d0e20 100%); /* Chrome10-25,Safari5.1-6 */
-                background: linear-gradient(to bottom,  #0a0f1a 0%, #0d0e20 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11e8bb', endColorstr='#8200c9',GradientType=0 ); /* IE6-9 */
-            }
-
-		</style>
+		<link href="static/css/animate.css" rel="stylesheet"/>
+		<link href="static/css/main.css" rel="stylesheet"/>
 	</head>
 	<body>
 
@@ -93,7 +22,7 @@
 			</div>		
 		</div>
 
-		<link href="static/css/animate.css" rel="stylesheet"/>
+
 		<script src="static/library/threejs/build/three.js"></script>
         <script src="static/library/Tween.js"></script>
 		<script src="static/library/threejs/js/Detector.js"></script>
