@@ -8,9 +8,8 @@ window.onload = function()
     ThreeIns = new ThreeJsClass();
     window.ThreeIns = ThreeIns;
 }
+
 //test 
-
-
 
 	function ThreeJsClass() {
         if (!Detector.webgl) {
@@ -24,6 +23,7 @@ window.onload = function()
             {
                 let time_exec = Math.random() * 500 + 500 ;
                 let time_delay = Math.random() * 300 ;
+
                 maxTime =( maxTime > time_exec + time_delay ?maxTime :time_exec + time_delay );
                 let tweenIns = new TWEEN.Tween(e.position).to(
                     {
